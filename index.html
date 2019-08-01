@@ -1,6 +1,14 @@
 <html>
   <head>
     <style>
+
+      h1{
+        text-align: center;
+      }
+      p {
+        text-align: center;
+      }
+
       #grid {
         display: flex;
         flex-direction: column;
@@ -12,47 +20,55 @@
         /* border-style: dotted;
         border-color: black; */
         align-self: center;
-
       }
 
       #grid > div > div {
         border-style: solid;
         border-color: green;
-
         width: 2rem;
         height: 2rem;
       }
-
     </style>
   </head>
   <body>
     <h1 id = "header1"> Acme Grid Maker</h1>
-    <p> Row Count <input type = "text" id = "rowCount" value = 1> </p>
-    <p> Col Count <input type = "text" id = "colCount" value = 1> </p>
-    <input type = "button" onclick = "render()" value = "Make Grid">
-    <div id = "grid">
-
-    </div>
+    <p> Row Count <input type = "text" id = "rowCount" value = 5> </p>
+    <p> Col Count <input type = "text" id = "colCount" value = 5> </p>
+    <p><input type = "button" onclick = "render()" value = "Make Grid"></p>
+    <div id = "grid"></div>
+    <p id = "pos"></p>
 
     <script>
-
+      //Global variable to track clicked block
+      const blockPosition = {
+        row: 0,
+        col: 0,
+      }
       const gridArea = document.querySelector("#grid");
 
       gridArea.addEventListener("click",(event) => {
-        console.log(event.target.parentNode.children);
+        console.log(event.target.style.backgroundColor="blue");
+        const blockCol = event.target;
+        const blockRow = blockCol.parentNode;
+        blockPosition.row = [...blockRow.parentNode.children].indexOf(blockRow);
+        blockPosition.col = [...blockCol.parentNode.children].indexOf(blockCol);
 
-
+        renderPos(); // Refresh the block coordinates
       });
 
-
-
-
-
+      const renderPos = ()=>{
+        //generate index numbers
+        const positionText = `<p>Row: ${blockPosition.row} Column: ${blockPosition.col}</p>`;
+        document.querySelector("#pos").innerHTML = positionText;
+      }
 
       const render = ()=>{
+        //generate grid
         const rows = document.querySelector("#rowCount");
         const columns = document.querySelector("#colCount");
         const htmlText = `<div>${"<div></div>".repeat(rows.value)}</div>`.repeat(columns.value);
+
+        //insert HTML text to for grid
         gridArea.innerHTML= htmlText;
       };
 
