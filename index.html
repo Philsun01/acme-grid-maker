@@ -1,17 +1,61 @@
 <html>
   <head>
     <style>
+      #grid {
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+      }
+
+      #grid > div {
+        display: flex;
+        /* border-style: dotted;
+        border-color: black; */
+        align-self: center;
+
+      }
+
+      #grid > div > div {
+        border-style: solid;
+        border-color: green;
+
+        width: 2rem;
+        height: 2rem;
+      }
+
     </style>
   </head>
   <body>
     <h1 id = "header1"> Acme Grid Maker</h1>
-    <p> Row Count <input type = "text" name = "rowCount"> </p>
-    <p> Col Count <input type = "text" name = "colCount"> </p>
+    <p> Row Count <input type = "text" id = "rowCount" value = 1> </p>
+    <p> Col Count <input type = "text" id = "colCount" value = 1> </p>
+    <input type = "button" onclick = "render()" value = "Make Grid">
     <div id = "grid">
 
     </div>
 
     <script>
+
+      const gridArea = document.querySelector("#grid");
+
+      gridArea.addEventListener("click",(event) => {
+        console.log(event.target.parentNode.children);
+
+
+      });
+
+
+
+
+
+
+      const render = ()=>{
+        const rows = document.querySelector("#rowCount");
+        const columns = document.querySelector("#colCount");
+        const htmlText = `<div>${"<div></div>".repeat(rows.value)}</div>`.repeat(columns.value);
+        gridArea.innerHTML= htmlText;
+      };
+
 
     </script>
   </body>
